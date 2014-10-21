@@ -11,8 +11,8 @@ Source0:       %{name}-%{version}.tar.gz
 BuildRequires: glib2-devel
 BuildRequires: gobject-introspection-devel >= 1.36
 BuildRequires: gssdp-devel
-BuildRequires: pkgconfig(gstreamer-1.0)
-BuildRequires: pkgconfig(gstreamer-plugins-base-1.0)
+BuildRequires: pkgconfig(gstreamer-0.10)
+BuildRequires: pkgconfig(gstreamer-plugins-base-0.10)
 BuildRequires: gupnp-devel
 BuildRequires: gupnp-av-devel
 BuildRequires: libxml2-devel
@@ -40,7 +40,10 @@ use %{name}.
 %setup -q -n %{name}-%{version}/%{name}
 
 %build
-%autogen --disable-static
+%autogen --disable-static \
+         --disable-gstreamer-metadata-backend \
+         --enable-legacy-gstreamer-metadata-backend \
+         --with-default-metadata-backend=gstreamer-legacy
 
 make %{?_smp_mflags} V=1
 
